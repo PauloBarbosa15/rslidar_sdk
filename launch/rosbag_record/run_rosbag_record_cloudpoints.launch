@@ -1,0 +1,25 @@
+<launch>
+    
+    <include file="$(dirname)/../start.launch"/>
+    
+    <arg name="bags_directory" default="/home/paulo/catkin_ws/src/"/>
+    <arg name="topic"
+        value="/rslidar_points"/>
+    <arg name="node_start_delay" default="0.0"/>
+
+    
+
+    <node pkg="rosbag" type="record" name="rosbag_record_cloudpoint"
+        args="
+            --buffsize=1024 
+            --split 
+            --duration=15m 
+            --bz2 
+            '$(arg topic)'
+            -o /home/paulo/catkin_ws/bagfiles/rosbag_cloudpoint.bag"
+        output="screen"
+        launch-prefix="bash -c 'sleep $(arg node_start_delay); $0 $@'"
+    />
+   
+    
+</launch>
